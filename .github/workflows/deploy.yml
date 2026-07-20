@@ -42,7 +42,8 @@ jobs:
           npm run build
         env:
           VITE_BASE_PATH: '/LEARN-HUB/'
-          VITE_API_URL: 'http://localhost:5001'
+          VITE_API_URL: 'https://learn-hub-5u3w.onrender.com'
+
 
 
       - name: Setup Pages
