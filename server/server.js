@@ -17,8 +17,10 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
+  'https://sathvikov.github.io',
   process.env.FRONTEND_URL, 
 ];
+
 
 app.use(
   cors({
