@@ -7,7 +7,39 @@ const connectDB = require('./config/db');
 dotenv.config();
 
 // Connect to database
-connectDB();
+connectDB().then(() => {
+  const seedAdmin = async () => {
+    try {
+      const User = require('./models/User');
+      const bcrypt = require('bcrypt');
+      const email = 'admin@learnhub.com';
+      const password = 'admin123';
+
+      const existing = await User.findOne({ email });
+      if (existing) {
+        console.log('✅ Admin user exists in database.');
+        return;
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hashed = await bcrypt.hash(password, salt);
+
+      const admin = new User({
+        name: 'Admin',
+        email,
+        password: hashed,
+        role: 'admin'
+      });
+
+      await admin.save();
+      console.log('✅ Auto-seeded admin user: admin@learnhub.com');
+    } catch (err) {
+      console.error('❌ Auto-seeding admin failed:', err.message);
+    }
+  };
+  seedAdmin();
+});
+
 
 const app = express();
 
