@@ -43,6 +43,17 @@ connectDB().then(() => {
 
 const app = express();
 
+// Ensure active database connection for serverless functions
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('Database middleware connection error:', error.message);
+    res.status(500).json({ message: 'Database connection failed' });
+  }
+});
+
 // ============================
 // ✅ CORS Configuration (Render + Localhost Safe)
 // ============================
