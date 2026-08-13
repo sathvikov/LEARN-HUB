@@ -60,7 +60,7 @@ app.use(
       // Allow requests with no origin (like Postman or server-to-server)
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
+      if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
         return callback(null, true);
       }
 
@@ -118,3 +118,5 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📚 LearnHub API ready at http://localhost:${PORT}`);
 });
+
+module.exports = app;
